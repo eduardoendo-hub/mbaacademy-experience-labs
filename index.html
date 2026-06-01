@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Experience Labs + Academy AI Master · Conclua suas 64h — MBA Impacta</title>
+<meta name="description" content="Aluno do MBA Impacta: conclua as 64 horas obrigatórias de Experience Labs no seu ritmo com o Impacta Academy AI Master — com condição exclusiva. Os Labs ao vivo seguem como caminho principal.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --imp-tech:#030200;
+  --imp-blue:#0A88F4;
+  --imp-blue-2:#5BB8FF;
+  --imp-blue-3:#BFE0FF;
+  --imp-deep:#00011E;
+  --imp-lime:#C3EB1E;
+  --w:#FFFFFF;
+  --w-2:#C8C8C8;
+  --w-3:#909090;
+  --w-4:rgba(255,255,255,.45);
+  --surface-1:#0a0a0c;
+  --surface-2:#121215;
+  --surface-3:#191a1f;
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.16);
+  --blue-soft:rgba(10,136,244,.12);
+  --font:'Ubuntu','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'Ubuntu Mono','JetBrains Mono',ui-monospace,monospace;
+  --max:1200px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0;background:#030200;color:var(--w);font-family:var(--font)}
+body{-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden;
+  background:
+    radial-gradient(ellipse 80% 50% at 82% -5%,rgba(10,136,244,.18) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 45% at 0% 30%,rgba(10,136,244,.07) 0%,transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 75%,rgba(10,136,244,.08) 0%,transparent 60%),
+    linear-gradient(180deg,#030200 0%,#05060b 40%,#030308 70%,#05060b 100%);
+  background-attachment:fixed;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+::selection{background:var(--imp-blue);color:#fff}
+
+/* ===== AMBIENT ===== */
+.amb{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.amb__grid{
+  position:absolute;inset:-2px;
+  background-image:
+    linear-gradient(to right,rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:88px 88px;
+  mask-image:radial-gradient(ellipse 90% 80% at 50% 30%,#000 10%,transparent 92%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 30%,#000 10%,transparent 92%);
+}
+.amb__orb{position:absolute;border-radius:50%;filter:blur(110px);mix-blend-mode:screen;opacity:.5}
+.amb__orb--a{width:620px;height:620px;background:#0A88F4;top:-160px;right:-180px;animation:orbA 32s ease-in-out infinite}
+.amb__orb--b{width:520px;height:520px;background:#0A4FB0;top:60%;left:-200px;opacity:.4;animation:orbB 38s ease-in-out infinite}
+@keyframes orbA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-140px,120px) scale(1.12)}}
+@keyframes orbB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(120px,-90px) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.amb__orb{animation:none}}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 40px}
+.section{padding:104px 0;border-top:1px solid var(--line)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--imp-blue-2);font-weight:400;margin:0 0 20px;
+}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.6}
+.sec-title{font-size:clamp(30px,3.6vw,46px);line-height:1.05;letter-spacing:-.02em;font-weight:700;margin:0 0 18px;max-width:20ch}
+.sec-title em{font-style:normal;color:var(--imp-blue)}
+.sec-lede{font-size:18px;line-height:1.6;color:var(--w-2);max-width:60ch;margin:0}
+strong{font-weight:500;color:#fff}
+
+/* ===== TOP BAR ===== */
+.bar{
+  position:fixed;top:0;left:0;right:0;z-index:90;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 40px;
+  background:linear-gradient(180deg,rgba(3,2,0,.92),rgba(3,2,0,.4));
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;transition:border-color .25s,background .25s;
+}
+.bar.is-stuck{border-bottom-color:var(--line);background:rgba(3,2,0,.96)}
+.bar__brand{display:inline-flex;align-items:center;gap:14px}
+.bar__brand img{height:30px;width:auto;display:block}
+.bar__nav{display:flex;align-items:center;gap:28px}
+.bar__nav a{font-size:13.5px;color:var(--w-3);transition:color .15s}
+.bar__nav a:hover{color:#fff}
+.bar__cta{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 20px;background:var(--imp-blue);color:#fff;
+  font-size:13px;font-weight:500;letter-spacing:.02em;cursor:pointer;
+  border:none;transition:all .15s;
+}
+.bar__cta:hover{background:#0073d6;transform:translateY(-1px);box-shadow:0 10px 26px -12px rgba(10,136,244,.8)}
+@media (max-width:920px){.bar{padding:12px 20px}.bar__nav{display:none}}
+
+/* ===== HERO ===== */
+.hero{position:relative;padding:172px 0 96px;overflow:hidden}
+.hero__a{
+  position:absolute;right:-120px;top:40px;width:680px;height:auto;opacity:.16;
+  pointer-events:none;transform:rotate(8deg);
+  filter:drop-shadow(0 0 60px rgba(10,136,244,.55));
+  animation:heroAFloat 14s ease-in-out infinite;
+}
+@keyframes heroAFloat{0%,100%{transform:rotate(8deg) translateY(0)}50%{transform:rotate(8deg) translateY(-22px)}}
+@media (prefers-reduced-motion:reduce){.hero__a{animation:none}}
+@media (max-width:820px){.hero__a{width:440px;right:-150px;opacity:.1}}
+.hero__badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--blue-soft);border:1px solid rgba(10,136,244,.5);
+  padding:7px 14px;border-radius:999px;margin-bottom:26px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--imp-blue-3);font-weight:400;
+}
+.hero__badge .dot{width:6px;height:6px;border-radius:50%;background:var(--imp-blue);box-shadow:0 0 8px var(--imp-blue);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero__wordmark{margin:30px 0 22px}
+.hero__wordmark-kicker{display:block;font-family:var(--mono);font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--imp-blue-2);margin-bottom:10px}
+.hero__wordmark-name{display:block;font-size:clamp(58px,9vw,124px);line-height:.86;letter-spacing:-.04em;font-weight:700;color:#fff;text-transform:none}
+.hero__wordmark-name br{display:block}
+@media (max-width:560px){.hero__wordmark-name{font-size:clamp(48px,16vw,72px)}}
+.hero h1{
+  font-size:clamp(28px,3.6vw,46px);line-height:1.05;letter-spacing:-.02em;font-weight:500;
+  margin:0 0 26px;max-width:20ch;color:var(--w-2);
+}
+.hero h1 em{font-style:normal;color:var(--imp-blue)}
+.hero__lede{font-size:clamp(17px,1.5vw,21px);line-height:1.6;color:var(--w-2);max-width:62ch;margin:0 0 38px}
+.hero__lede strong{color:#fff;font-weight:500}
+.hero__cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:15px;font-weight:500;letter-spacing:.01em;cursor:pointer;border:none;
+  padding:16px 28px;transition:all .16s;
+}
+.btn--primary{background:var(--imp-blue);color:#fff}
+.btn--primary:hover{background:#0073d6;transform:translateY(-2px);box-shadow:0 16px 36px -14px rgba(10,136,244,.85)}
+.btn--ghost{background:transparent;color:#fff;border:1px solid var(--line-2)}
+.btn--ghost:hover{border-color:#fff;background:rgba(255,255,255,.04)}
+.btn .arrow{font-family:var(--mono);font-weight:700}
+.hero__note{margin-top:18px;font-size:13px;color:var(--w-3);display:flex;align-items:center;gap:8px}
+.hero__note b{color:var(--imp-blue-2);font-weight:500}
+
+/* stat strip */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);margin-top:72px;
+}
+.stat{background:#070708;padding:28px 26px}
+.stat__num{font-size:40px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1}
+.stat__num span{color:var(--imp-blue)}
+.stat__label{margin-top:8px;font-size:13.5px;color:var(--w-3);line-height:1.4}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* ===== PROSE / LABS INTRO ===== */
+.labs-intro{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.labs-intro__body p{font-size:17px;line-height:1.7;color:var(--w-2);margin:0 0 18px;max-width:54ch}
+.labs-intro__body p:last-child{margin-bottom:0}
+.callout{
+  background:linear-gradient(160deg,rgba(10,136,244,.1),rgba(10,136,244,.02));
+  border:1px solid rgba(10,136,244,.3);border-left:3px solid var(--imp-blue);
+  padding:28px 30px;
+}
+.callout__tag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--imp-blue-2);margin-bottom:12px}
+.callout p{margin:0;font-size:17px;line-height:1.6;color:#fff;font-weight:300}
+.callout p strong{font-weight:600}
+@media (max-width:820px){.labs-intro{grid-template-columns:1fr;gap:32px}}
+
+/* ===== TWO PATHS ===== */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.path{
+  position:relative;background:var(--surface-1);border:1px solid var(--line);
+  padding:38px 34px 34px;overflow:hidden;
+}
+.path--live{border-color:rgba(255,255,255,.14)}
+.path--async{border-color:rgba(10,136,244,.4);background:linear-gradient(165deg,rgba(10,136,244,.07),var(--surface-1) 60%)}
+.path__flag{
+  position:absolute;top:0;right:0;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  padding:7px 14px;
+}
+.path--live .path__flag{background:rgba(255,255,255,.1);color:var(--w-2)}
+.path--async .path__flag{background:var(--imp-blue);color:#fff}
+.path__mode{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--w-3);margin-bottom:10px}
+.path h3{font-size:27px;font-weight:700;letter-spacing:-.01em;margin:0 0 14px}
+.path > p{font-size:15.5px;line-height:1.6;color:var(--w-2);margin:0 0 22px;max-width:42ch}
+.path ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.path li{display:flex;gap:11px;font-size:14.5px;color:var(--w-2);line-height:1.45}
+.path li svg{flex:0 0 auto;width:17px;height:17px;margin-top:2px;color:var(--imp-blue)}
+.path--live li svg{color:var(--w-3)}
+.paths-note{
+  margin-top:24px;text-align:center;font-size:15px;color:var(--w-2);
+  padding:18px;border:1px dashed var(--line-2);
+}
+.paths-note strong{color:#fff;font-weight:500}
+@media (max-width:820px){.paths{grid-template-columns:1fr}}
+
+/* ===== ACADEMY ===== */
+.academy{background:
+  radial-gradient(ellipse 60% 80% at 90% 10%,rgba(10,136,244,.12),transparent 60%);
+}
+.academy__head{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end;margin-bottom:48px}
+.academy__lock{display:inline-flex;align-items:center;gap:16px;margin-bottom:24px}
+.academy__logo{height:38px;width:auto;display:block}
+.academy__aim{
+  font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;
+  color:var(--imp-blue-2);border:1px solid rgba(10,136,244,.5);background:var(--blue-soft);
+  padding:5px 11px;border-radius:999px;
+}
+.academy__head .sec-lede{align-self:end}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.feat{background:#070708;padding:30px 26px}
+.feat__ic{width:34px;height:34px;color:var(--imp-blue);margin-bottom:18px}
+.feat h4{margin:0 0 8px;font-size:18px;font-weight:500}
+.feat p{margin:0;font-size:14px;line-height:1.55;color:var(--w-3)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.tool{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--line-2);padding:9px 16px;border-radius:999px;
+  font-size:13.5px;color:var(--w-2);
+}
+.tool b{color:#fff;font-weight:500}
+.academy__more{
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  margin-top:32px;padding:28px 32px;
+  background:linear-gradient(160deg,rgba(10,136,244,.08),rgba(10,136,244,.01));
+  border:1px solid rgba(10,136,244,.3);
+}
+.academy__more h4{margin:0 0 6px;font-size:20px;font-weight:500}
+.academy__more p{margin:0;font-size:14.5px;color:var(--w-3);max-width:52ch;line-height:1.55}
+.academy__more .btn{flex:0 0 auto}
+@media (max-width:980px){.feat-grid{grid-template-columns:repeat(2,1fr)}.academy__head{grid-template-columns:1fr;gap:24px}}
+
+/* ===== STEPS ===== */
+.steps{display:flex;flex-direction:column;gap:0;border:1px solid var(--line);margin-top:8px}
+.step{display:grid;grid-template-columns:88px 1fr;gap:28px;padding:30px 34px;border-bottom:1px solid var(--line);align-items:start;transition:background .2s}
+.step:last-child{border-bottom:none}
+.step:hover{background:var(--surface-1)}
+.step__n{font-family:var(--mono);font-size:15px;color:var(--imp-blue);padding-top:6px;border-top:2px solid var(--imp-blue);width:50px;letter-spacing:.06em}
+.step h4{margin:0 0 6px;font-size:20px;font-weight:500}
+.step p{margin:0;font-size:15px;line-height:1.6;color:var(--w-2);max-width:64ch}
+.step p .tag{color:var(--imp-blue-2);font-weight:500}
+@media (max-width:680px){.step{grid-template-columns:1fr;gap:10px;padding:24px}}
+
+/* ===== OFFER ===== */
+.offer{
+  position:relative;overflow:hidden;
+  background:linear-gradient(150deg,#041a33 0%,#05080f 55%,#030200 100%);
+  border:1px solid rgba(10,136,244,.4);padding:64px 56px;
+}
+.offer__glow{position:absolute;width:520px;height:520px;border-radius:50%;background:var(--imp-blue);filter:blur(140px);opacity:.3;top:-160px;right:-120px;pointer-events:none}
+.offer__inner{position:relative;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
+.offer__tag{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--imp-blue-2);margin-bottom:16px}
+.offer h2{font-size:clamp(28px,3.2vw,40px);line-height:1.08;letter-spacing:-.02em;font-weight:700;margin:0 0 18px}
+.offer h2 em{font-style:normal;color:var(--imp-blue-2)}
+.offer p{font-size:16.5px;line-height:1.6;color:var(--w-2);margin:0;max-width:52ch}
+.offer__panel{background:rgba(0,0,0,.35);border:1px solid var(--line);padding:32px}
+.offer__discount{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+.offer__discount .pct{font-size:64px;font-weight:700;letter-spacing:-.03em;color:#fff;line-height:.9}
+.offer__discount .off{font-family:var(--mono);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--imp-blue-2)}
+.offer__sub{font-size:14px;color:var(--w-3);margin:0 0 22px;line-height:1.5}
+.offer__panel .btn{width:100%;justify-content:center}
+.offer__meta{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+.offer__meta div{display:flex;gap:9px;align-items:center;font-size:13.5px;color:var(--w-2)}
+.offer__meta svg{width:15px;height:15px;color:var(--imp-blue);flex:0 0 auto}
+@media (max-width:880px){.offer{padding:40px 26px}.offer__inner{grid-template-columns:1fr;gap:32px}}
+
+/* ===== FAQ ===== */
+.faq{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{
+  list-style:none;cursor:pointer;padding:26px 8px 26px 0;
+  display:flex;align-items:center;gap:20px;
+  font-size:19px;font-weight:500;color:#fff;transition:color .15s;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--imp-blue-2)}
+.faq summary .q-n{font-family:var(--mono);font-size:13px;color:var(--imp-blue);flex:0 0 auto;width:34px}
+.faq summary .q-ic{margin-left:auto;flex:0 0 auto;width:22px;height:22px;color:var(--w-3);transition:transform .25s}
+.faq details[open] summary .q-ic{transform:rotate(45deg);color:var(--imp-blue)}
+.faq__a{padding:0 54px 28px;font-size:16px;line-height:1.7;color:var(--w-2);max-width:74ch}
+.faq__a strong{color:#fff;font-weight:500}
+.faq__a a{color:var(--imp-blue-2);text-decoration:underline;text-underline-offset:3px}
+
+/* ===== HELP ===== */
+.help{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+  background:var(--surface-1);border:1px solid var(--line);padding:36px 40px;margin-top:48px}
+.help h3{margin:0 0 6px;font-size:22px;font-weight:500}
+.help p{margin:0;font-size:15px;color:var(--w-3)}
+.help .btn--wa{background:#fff;color:#030200}
+.help .btn--wa:hover{background:var(--imp-lime);color:#030200;transform:translateY(-2px)}
+
+/* ===== FOOTER ===== */
+.foot{border-top:1px solid var(--line);background:#050505;padding:56px 0 36px;margin-top:0}
+.foot__top{display:flex;align-items:flex-start;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.foot__brand img{height:30px;width:auto;margin-bottom:16px}
+.foot__brand p{margin:0;font-size:13px;color:var(--w-3);max-width:42ch;line-height:1.6}
+.foot__links{display:flex;gap:64px;flex-wrap:wrap}
+.foot__links h5{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--w-3);margin:0 0 14px;font-weight:400}
+.foot__links a{display:block;font-size:14px;color:var(--w-2);padding:5px 0}
+.foot__links a:hover{color:#fff}
+.foot__copy{padding-top:28px;font-size:12px;color:var(--w-3);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;line-height:1.6}
+.foot__copy span{letter-spacing:.04em}
+
+@media (max-width:680px){
+  .wrap{padding:0 22px}
+  .section{padding:72px 0}
+  .hero{padding:130px 0 72px}
+}
+</style>
+</head>
+<body>
+
+<div class="amb" aria-hidden="true">
+  <div class="amb__grid"></div>
+  <div class="amb__orb amb__orb--a"></div>
+  <div class="amb__orb amb__orb--b"></div>
+</div>
+
+<!-- ===================== TOP BAR ===================== -->
+<header class="bar" id="bar">
+  <a class="bar__brand" href="#top" aria-label="Faculdade Impacta">
+    <img src="assets/logo-faculdade-impacta-branco.png" alt="Faculdade Impacta">
+  </a>
+  <nav class="bar__nav">
+    <a href="#labs">Experience Labs</a>
+    <a href="#caminhos">Como concluir</a>
+    <a href="#academy">Academy AI Master</a>
+    <a href="#validar">Validação</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <button class="bar__cta" data-buy>Garantir condição <span class="arrow">→</span></button>
+</header>
+
+<main id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <svg class="hero__a" viewBox="0 0 100 69.16" aria-hidden="true">
+      <path d="M0,69.03l15.48-26.56c.51-.89,1.85-2.28,3.82-2.28h23.59l-15.93,27.29s-.01,.03-.01,.03c-.64,.94-1.68,1.47-2.87,1.49l-24.07,.02Z" fill="#0A88F4" fill-rule="evenodd"/>
+      <path d="M100,69.16h-23.64c-1.33,0-2.51-.59-3.31-1.51l-.79-1.37L34.17,0h24.18c1.15,.15,2.16,.78,2.83,1.66l.58,1.02,38.24,66.48Z" fill="#0A88F4" fill-rule="evenodd"/>
+    </svg>
+    <div class="wrap">
+      <span class="hero__badge"><span class="dot"></span>Exclusivo · alunos do MBA Impacta</span>
+      <div class="hero__wordmark">
+        <span class="hero__wordmark-kicker">MBA Impacta</span>
+        <span class="hero__wordmark-name">Experience<br>Labs</span>
+      </div>
+      <h1>Conclua suas <em>64h de Labs</em> do seu jeito.</h1>
+      <p class="hero__lede">
+        Os <strong>Experience Labs ao vivo</strong> seguem como o caminho principal — e continuam cheios de novidades. Mas agora você tem <strong>mais uma forma</strong> de fechar as 64 horas obrigatórias do seu MBA: no seu ritmo, de forma assíncrona, com o <strong>Impacta Academy AI Master</strong> e uma condição feita só para alunos.
+      </p>
+      <div class="hero__cta">
+        <button class="btn btn--primary" data-buy>Garantir minha condição <span class="arrow">→</span></button>
+        <a class="btn btn--ghost" href="#caminhos">Entender como funciona</a>
+      </div>
+      <div class="hero__note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+        <span>Cupom de <b>50% de desconto</b> enviado por e-mail · válido só pelo link desta página</span>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><div class="stat__num">64<span>h</span></div><div class="stat__label">de Labs obrigatórias no MBA</div></div>
+        <div class="stat"><div class="stat__num">2<span> anos</span></div><div class="stat__label">de prazo para concluir, no seu ritmo</div></div>
+        <div class="stat"><div class="stat__num">50<span>%</span></div><div class="stat__label">de desconto exclusivo para aluno</div></div>
+        <div class="stat"><div class="stat__num">1<span> ano</span></div><div class="stat__label">de acesso ao Academy AI Master</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== O QUE SÃO OS LABS ===================== -->
+  <section class="section" id="labs">
+    <div class="wrap">
+      <span class="eyebrow">Módulo · Experience Labs</span>
+      <div class="labs-intro">
+        <div>
+          <h2 class="sec-title">O aprendizado prático que fecha o seu MBA.</h2>
+          <div class="labs-intro__body">
+            <p>O aprendizado prático e a experiência são fundamentais para o desenvolvimento profissional — seja para aplicar o que você viu em aula ou para expandir o seu conhecimento.</p>
+            <p>Durante o período de <strong>até 2 anos</strong>, você monta o seu próprio calendário e escolhe quais Labs deseja fazer dentro das <strong>64 horas obrigatórias</strong> de aulas online ao vivo que garantem certificado.</p>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="callout__tag">Importante</div>
+          <p>Os <strong>Labs ao vivo continuam sendo o caminho principal</strong> para concluir suas 64 horas — com calendário regular e novidades a cada turma. O que muda é que agora você tem uma alternativa a mais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DOIS CAMINHOS ===================== -->
+  <section class="section" id="caminhos">
+    <div class="wrap">
+      <span class="eyebrow">Como concluir suas 64h</span>
+      <h2 class="sec-title">Duas formas de fechar as horas. <em>Você escolhe.</em></h2>
+      <p class="sec-lede">Recebemos muitos pedidos de alunos que queriam concluir sem precisar esperar o calendário regular. Por isso abrimos uma segunda via — sem tirar nada da primeira.</p>
+
+      <div class="paths">
+        <div class="path path--live">
+          <span class="path__flag">Caminho principal</span>
+          <div class="path__mode">Síncrono · ao vivo</div>
+          <h3>Experience Labs ao vivo</h3>
+          <p>O formato de sempre: aulas online ao vivo, no calendário regular, com certificado a cada Lab concluído.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Calendário regular, sempre com novidades</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Aulas ao vivo, interação com professores</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Monte seu calendário em até 2 anos</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Já incluso no seu MBA, sem custo extra</li>
+          </ul>
+        </div>
+
+        <div class="path path--async">
+          <span class="path__flag">Novo · opcional</span>
+          <div class="path__mode">Assíncrono · no seu ritmo</div>
+          <h3>Impacta Academy AI Master</h3>
+          <p>Uma alternativa para quem quer concluir sem esperar o calendário: estude quando quiser e valide as horas com o certificado.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>100% no seu ritmo, sem data marcada</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Conclua sem esperar a próxima turma</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Condição exclusiva: 50% de desconto</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Foco total em Inteligência Artificial</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="paths-note">
+        Não é obrigatório comprar nada. <strong>Os Labs ao vivo seguem disponíveis do mesmo jeito</strong> — o Academy é só uma porta a mais para concluir mais rápido.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ACADEMY ===================== -->
+  <section class="section academy" id="academy">
+    <div class="wrap">
+      <div class="academy__head">
+        <div>
+          <span class="eyebrow">A alternativa assíncrona</span>
+          <div class="academy__lock">
+            <img class="academy__logo" src="assets/impacta-academy.png" alt="Impacta Academy">
+            <span class="academy__aim">AI Master</span>
+          </div>
+          <h2 class="sec-title">Domine IA na prática — e conclua suas horas no caminho.</h2>
+        </div>
+        <p class="sec-lede">Uma formação completa em Inteligência Artificial aplicada: das ferramentas do dia a dia à automação de processos reais. Você aprende fazendo e, ao concluir qualquer formação, valida suas 64 horas de Labs.</p>
+      </div>
+
+      <div class="feat-grid">
+        <div class="feat">
+          <svg class="feat__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1 0 8 4 4 0 0 1-8 0 4 4 0 0 1 0-8 4 4 0 0 1 4-4z"/><path d="M12 6v12"/></svg>
+          <h4>IA na prática</h4>
+          <p>ChatGPT, Claude e Gemini aplicados ao seu trabalho — não só teoria.</p>
+        </div>
+        <div class="feat">
+          <svg class="feat__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+          <h4>Automação</h4>
+          <p>Crie fluxos e agentes com Make e n8n para automatizar tarefas.</p>
+        </div>
+        <div class="feat">
+          <svg class="feat__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6 .9-4.5 4.3 1 6.3L12 17l-5.5 2.8 1-6.3L3 8.9 9 8z"/></svg>
+          <h4>Certificação</h4>
+          <p>Certificado reconhecido a cada formação concluída na plataforma.</p>
+        </div>
+        <div class="feat">
+          <svg class="feat__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <h4>No seu ritmo</h4>
+          <p>Acesso por 1 ano. Estude quando e de onde quiser, sem data marcada.</p>
+        </div>
+      </div>
+
+      <div class="tools">
+        <span class="tool"><b>ChatGPT</b></span>
+        <span class="tool"><b>Claude</b></span>
+        <span class="tool"><b>Gemini</b></span>
+        <span class="tool"><b>Make</b></span>
+        <span class="tool"><b>n8n</b></span>
+        <span class="tool">+ automação e agentes</span>
+      </div>
+
+      <div class="academy__more">
+        <div class="academy__more-txt">
+          <h4>Quer ver tudo o que o Academy oferece?</h4>
+          <p>Conheça a grade completa, ferramentas e formações no site oficial do Impacta Academy AI Master.</p>
+        </div>
+        <a class="btn btn--ghost" href="https://academy.impacta.com.br/" target="_blank" rel="noopener">Conhecer o Academy <span class="arrow">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMO VALIDAR ===================== -->
+  <section class="section" id="validar">
+    <div class="wrap">
+      <span class="eyebrow">Passo a passo</span>
+      <h2 class="sec-title">Como validar suas 64 horas pelo Academy.</h2>
+      <p class="sec-lede">Simples e direto pelo Portal do Aluno. Veja o caminho completo, do desconto à conclusão dos Labs.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step__n">01</div>
+          <div>
+            <h4>Garanta sua condição</h4>
+            <p>Acesse pelo link desta página e receba o <span class="tag">cupom de 50% de desconto por e-mail</span>. O desconto vale apenas para compras feitas por aqui e exclusivamente para alunos do MBA.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n">02</div>
+          <div>
+            <h4>Faça qualquer uma das formações</h4>
+            <p>Estude no seu ritmo dentro do Impacta Academy AI Master. Você pode concluir sem esperar o calendário regular dos Labs.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n">03</div>
+          <div>
+            <h4>Receba seu certificado</h4>
+            <p>Ao finalizar a formação, a própria plataforma gera o seu certificado de conclusão.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n">04</div>
+          <div>
+            <h4>Abra um requerimento no Portal do Aluno</h4>
+            <p>Anexe o certificado gerado pela plataforma e solicite à secretaria a <span class="tag">conclusão dos Labs</span>.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__n">05</div>
+          <div>
+            <h4>A secretaria valida</h4>
+            <p>Suas horas são validadas. Lembrando que, no momento da validação, a secretaria confere se a sua <span class="tag">assinatura do Academy está ativa</span>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OFERTA ===================== -->
+  <section class="section" style="border-top:none">
+    <div class="wrap">
+      <div class="offer">
+        <div class="offer__glow" aria-hidden="true"></div>
+        <div class="offer__inner">
+          <div>
+            <img src="assets/impacta-academy.png" alt="Impacta Academy" style="height:30px;width:auto;margin-bottom:20px;opacity:.95">
+            <div class="offer__tag">Condição exclusiva · aluno MBA Impacta</div>
+            <h2>Metade do valor. <em>Mesma plataforma completa.</em></h2>
+            <p>Como esta é mais uma alternativa de conclusão, geramos um cupom de <strong>50% sobre o valor integral de venda</strong>. Você tem o mesmo acesso e os mesmos benefícios de qualquer cliente do Academy — pagando metade.</p>
+          </div>
+          <div class="offer__panel">
+            <div class="offer__discount">
+              <span class="pct">50%</span>
+              <span class="off">de<br>desconto</span>
+            </div>
+            <p class="offer__sub">Cupom enviado por e-mail após o acesso pelo link. Válido só por esta página e só para alunos do MBA.</p>
+            <button class="btn btn--primary" data-buy>Garantir minha condição <span class="arrow">→</span></button>
+            <div class="offer__meta">
+              <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>1 ano de acesso à plataforma</div>
+              <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Mesmos benefícios de um cliente comum</div>
+              <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Valida as 64h obrigatórias de Labs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <span class="eyebrow">Perguntas frequentes</span>
+      <h2 class="sec-title">Tudo o que você precisa saber.</h2>
+
+      <div class="faq">
+        <details open>
+          <summary><span class="q-n">01</span>Sou obrigado a comprar o Academy AI Master para concluir minhas horas de Labs?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Não. O calendário de <strong>Labs ao vivo continua exatamente como sempre</strong> — e cheio de novidades. Como recebemos muitos pedidos de alunos que queriam uma forma de concluir sem esperar o calendário regular, abrimos esta oportunidade. É apenas uma alternativa a mais.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">02</span>Vou pagar o mesmo preço do público em geral?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Não. Por ser apenas mais uma alternativa de conclusão, geramos um <strong>cupom de 50% sobre o valor integral de venda</strong>, enviado por e-mail. Esse desconto é válido somente para compras feitas pelo link desta página e exclusivamente para alunos do MBA.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">03</span>Quando recebo meu acesso à plataforma?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Assim que o pagamento for confirmado, você recebe <strong>em até 48 horas</strong> um e-mail com os dados de acesso à plataforma. É só entrar e começar a estudar no seu ritmo.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">04</span>Como faço para validar as minhas 64 horas?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Ao finalizar qualquer uma das formações, <strong>abra um requerimento no Portal do Aluno</strong> anexando o certificado gerado pela plataforma e solicitando a conclusão dos Labs à secretaria. Vale lembrar que, no momento da validação, a secretaria confere se a sua <strong>assinatura do Academy está ativa</strong>.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">05</span>Quanto tempo terei de acesso ao Academy?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Você terá <strong>1 ano de acesso</strong> à plataforma.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">06</span>Os benefícios do Academy são os mesmos de um cliente que não é aluno do MBA?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Sim. Você tem <strong>exatamente o mesmo acesso e os mesmos benefícios</strong> de qualquer outro cliente do Academy.</div>
+        </details>
+        <details>
+          <summary><span class="q-n">07</span>Estou com algumas dúvidas — com quem posso falar?<svg class="q-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></summary>
+          <div class="faq__a">Fale com a nossa secretaria pelo WhatsApp para tirar dúvidas e receber ajuda. <a href="https://api.whatsapp.com/send/?phone=5511970542667&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">Abrir WhatsApp da secretaria →</a></div>
+        </details>
+      </div>
+
+      <div class="help">
+        <div>
+          <h3>Ainda com dúvidas?</h3>
+          <p>A secretaria te ajuda direto pelo WhatsApp.</p>
+        </div>
+        <a class="btn btn--wa" href="https://api.whatsapp.com/send/?phone=5511970542667&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1-.2.2-.6.8-.7.9-.1.1-.3.2-.5.1-.7-.3-1.4-.6-2-1.5-.2-.3.2-.3.5-1 .1-.1 0-.3 0-.4 0-.1-.5-1.3-.7-1.7-.2-.4-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 4 3.4 1.4.6 2 .6 2.7.5.4-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z"/></svg>
+          WhatsApp da secretaria
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <img src="assets/logo-faculdade-impacta-branco.png" alt="Faculdade Impacta">
+        <p>Página exclusiva para alunos do MBA Impacta. Conteúdo sobre conclusão das 64 horas de Experience Labs.</p>
+      </div>
+      <div class="foot__links">
+        <div>
+          <h5>Nesta página</h5>
+          <a href="#labs">Experience Labs</a>
+          <a href="#caminhos">Como concluir</a>
+          <a href="#academy">Academy AI Master</a>
+          <a href="#validar">Validação</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div>
+          <h5>Aluno MBA</h5>
+          <a href="https://mba.impacta.edu.br/" target="_blank" rel="noopener">Sobre o MBA</a>
+          <a href="https://academy.impacta.com.br/" target="_blank" rel="noopener">Conhecer o Academy</a>
+          <a href="https://api.whatsapp.com/send/?phone=5511970542667&text&type=phone_number&app_absent=0" target="_blank" rel="noopener">WhatsApp da secretaria</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot__copy">
+      <span>© Impacta — União Educacional, Cultural e Tecnológica Impacta. Todos os direitos reservados.</span>
+      <span>Cupom de 50% válido apenas via link desta página e exclusivo para alunos do MBA.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Swap this single URL for the Engaged buy link ----
+const BUY_URL = "https://impacta.site.engaged.com.br/p/checkout/w4uz6kh4cj";
+document.querySelectorAll('[data-buy]').forEach(el => {
+  el.addEventListener('click', () => {
+    if (BUY_URL && BUY_URL !== "#COMPRA") window.location.href = BUY_URL;
+    else window.location.hash = "academy";
+  });
+  if (BUY_URL && BUY_URL !== "#COMPRA") el.style.cursor = "pointer";
+});
+
+// sticky bar shadow
+const bar = document.getElementById('bar');
+const onScroll = () => bar.classList.toggle('is-stuck', window.scrollY > 12);
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+</script>
+
+</body>
+</html>
