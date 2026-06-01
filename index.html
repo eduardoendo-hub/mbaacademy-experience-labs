@@ -656,12 +656,63 @@ strong{font-weight:500;color:#fff}
 <script>
 // ---- Swap this single URL for the Engaged buy link ----
 const BUY_URL = "https://impacta.site.engaged.com.br/p/checkout/w4uz6kh4cj";
+
+// ---- IRIS tracking (captura de dados / atribuicao) ----
+const IRIS_ENDPOINT = "https://iris.technowhub.ai/api/events";
+const PRODUCT_SLUG = "mba-academy";
+const CAMPAIGN_SLUG = "mba-academy-ai-master";
+const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
+
+// Persiste UTMs da URL em sessionStorage (sobrevivem a navegacao interna).
+function captureUtms() {
+  try {
+    const qs = new URLSearchParams(window.location.search);
+    UTM_KEYS.forEach(k => {
+      const v = qs.get(k);
+      if (v) sessionStorage.setItem("iris_" + k, v);
+    });
+  } catch (_) {}
+}
+function readUtms() {
+  const out = {};
+  UTM_KEYS.forEach(k => {
+    try { const v = sessionStorage.getItem("iris_" + k); if (v) out[k] = v; } catch (_) {}
+  });
+  return out;
+}
+function track(eventName, extra) {
+  try {
+    const body = Object.assign({
+      product_slug: PRODUCT_SLUG,
+      campaign_slug: CAMPAIGN_SLUG,
+      event_name: eventName,
+      page_url: window.location.href,
+      referrer: document.referrer || null,
+    }, readUtms(), extra || {});
+    fetch(IRIS_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      keepalive: true,
+      mode: "cors",
+    }).catch(() => {});
+  } catch (_) {}
+}
+
+captureUtms();
+track("lp_view");
+
 document.querySelectorAll('[data-buy]').forEach(el => {
   el.addEventListener('click', () => {
+    track("click_compra");
     if (BUY_URL && BUY_URL !== "#COMPRA") window.location.href = BUY_URL;
     else window.location.hash = "academy";
   });
   if (BUY_URL && BUY_URL !== "#COMPRA") el.style.cursor = "pointer";
+});
+
+document.querySelectorAll('a[href*="api.whatsapp.com"]').forEach(el => {
+  el.addEventListener('click', () => track("click_whats"));
 });
 
 // sticky bar shadow
